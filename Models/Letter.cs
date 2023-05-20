@@ -10,9 +10,9 @@ namespace DontForget.Models
         public int userId { get; set; }
 
         [Required]
-        public string LetterTitle { get; set; }
+        public string? LetterTitle { get; set; }
 
         [Required]
-        public string LetterBody { get; set;}
+        public string? LetterBody { get; set;}
     }
 }
