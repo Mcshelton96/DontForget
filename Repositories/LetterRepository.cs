@@ -16,7 +16,7 @@ namespace DontForget.Repositories
                 using(var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT Id, userId, LetterTitle, LetterBody,
+                       SELECT Id, UserId, LetterTitle, LetterBody,
                        FROM Letter";
 
                     var reader = cmd.ExecuteReader();
@@ -27,7 +27,7 @@ namespace DontForget.Repositories
                         letters.Add(new Letter()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            userId = DbUtils.GetInt(reader, "userId"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
                             LetterTitle = DbUtils.GetString(reader, "LetterTitle"),
                             LetterBody = DbUtils.GetString(reader, "LetterBody"),
 
@@ -46,7 +46,7 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, userId, LetterTitle, LetterBody,
+                          SELECT Id, UserId, LetterTitle, LetterBody,
                             FROM Letter
                            WHERE Id = @Id";
 
@@ -60,7 +60,7 @@ namespace DontForget.Repositories
                         letter = new Letter()
                         {
                             Id = id,
-                            userId = DbUtils.GetInt(reader, "userId"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
                             LetterTitle = DbUtils.GetString(reader, "LetterTitle"),
                             LetterBody = DbUtils.GetString(reader, "LetterBody"),
                         };
@@ -69,6 +69,60 @@ namespace DontForget.Repositories
                     reader.Close();
 
                     return letter;
+                }
+            }
+        }
+        public void Add(Letter letter)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Letter (UserId, LetterTitle, LetterBody)
+                        OUTPUT INSERTED.ID
+                        VALUES (@UserId, @LetterTitle, @LetterBody)";
+
+                    DbUtils.AddParameter(cmd, "@UserId", letter.UserId);
+                    DbUtils.AddParameter(cmd, "@LetterTitle", letter.LetterTitle);
+                    DbUtils.AddParameter(cmd, "@LetterBody", letter.LetterBody);
+
+                    letter.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+        public void Update(Letter letter)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Letter
+                           SET LetterTitle = @LetterTitle,
+                               LetterBody = @LetterBody,
+                         WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@LetterTitle", letter.LetterTitle);
+                    DbUtils.AddParameter(cmd, "@LetterBody", letter.LetterBody);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Post WHERE Id = @Id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
