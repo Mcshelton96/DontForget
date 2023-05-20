@@ -6,7 +6,7 @@ namespace DontForget.Repositories
     {
         void Add(User user);
         void Delete(int id);
-        List<User> GetAll();
+        List<User> GetAllUsers();
         User GetById(int id);
         void Update(User user);
     }

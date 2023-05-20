@@ -11,7 +11,7 @@ namespace DontForget.Repositories
     {
         public UserRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<User> GetAll()
+        public List<User> GetAllUsers()
         {
             using (var conn = Connection)
             {
