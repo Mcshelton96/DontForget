@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace DontForget.Repositories
 {
-    public class LetterRepository : BaseRepository
+    public class LetterRepository : BaseRepository, ILetterRepository
     {
         public LetterRepository(IConfiguration configuration) : base(configuration) { }
 
@@ -13,7 +13,7 @@ namespace DontForget.Repositories
             using (var conn = Connection)
             {
                 conn.Open();
-                using(var cmd = conn.CreateCommand())
+                using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
                        SELECT Id, UserId, LetterTitle, LetterBody,
