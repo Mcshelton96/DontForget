@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DontForget.Models;
+using DontForget.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,57 @@ namespace DontForget.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
+        private readonly IContactRepository _contactRepository;
+        public ContactController(IContactRepository contactRepository)
+        {
+            _contactRepository = contactRepository;
+        }
         // GET: api/<ContactController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_contactRepository.GetAllContacts());
         }
 
         // GET api/<ContactController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var contact = _contactRepository.GetById(id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+            return Ok(contact);
         }
 
         // POST api/<ContactController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Contact(Contact contact)
         {
+            _contactRepository.Add(contact);
+            return CreatedAtAction("Get", new { id = contact.Id }, contact);
         }
 
         // PUT api/<ContactController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Contact contact)
         {
+            if (id != contact.Id)
+            {
+                return BadRequest();
+            }
+
+            _contactRepository.Update(contact);
+            return NoContent();
         }
 
         // DELETE api/<ContactController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _contactRepository.Delete(id);
+            return NoContent();
         }
     }
 }
