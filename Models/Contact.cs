@@ -18,7 +18,7 @@ namespace DontForget.Models
         [Required]
         public string ContactAddress { get; set; }
 
-        public DateOnly ContactBirthday { get; set; }
+        public DateTime ContactBirthday { get; set; }
 
     }
 }
