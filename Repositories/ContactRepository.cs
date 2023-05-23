@@ -3,7 +3,7 @@ using DontForget.Utils;
 
 namespace DontForget.Repositories
 {
-    public class ContactRepository : BaseRepository
+    public class ContactRepository : BaseRepository, IContactRepository
     {
         public ContactRepository(IConfiguration configuration) : base(configuration) { }
 
