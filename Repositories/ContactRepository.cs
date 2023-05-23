@@ -42,7 +42,7 @@ namespace DontForget.Repositories
             }
         }
 
-        public User GetById(int id)
+        public Contact GetById(int id)
         {
             using (var conn = Connection)
             {
@@ -50,35 +50,35 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, Name, userName, Email, Address
-                            FROM User
+                          SELECT Id, contactName, contactMembers, contactAddress, contactBirthday
+                            FROM contact
                             ";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
                     var reader = cmd.ExecuteReader();
 
-                    User user = null;
+                    Contact contact = null;
                     if (reader.Read())
                     {
-                        user = new User()
+                        contact = new Contact()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            Name = DbUtils.GetString(reader, "Name"),
-                            userName = DbUtils.GetString(reader, "userName"),
-                            Email = DbUtils.GetString(reader, "Email"),
-                            Address = DbUtils.GetString(reader, "Address"),
+                            ContactName = DbUtils.GetString(reader, "contactName"),
+                            ContactMembers = DbUtils.GetString(reader, "contactMembers"),
+                            ContactAddress = DbUtils.GetString(reader, "contactAddress"),
+                            ContactBirthday = DbUtils.GetDateTime(reader, "contactBirthday"),
                         };
                     }
 
                     reader.Close();
 
-                    return user;
+                    return contact;
                 }
             }
         }
 
-        public void Add(User user)
+        public void Add(Contact contact)
         {
             using (var conn = Connection)
             {
@@ -86,21 +86,21 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO User (Name, userName, Email, Address)
+                        INSERT INTO Contact (contactName, contactMembers, contactAddress, contactBirthday)
                         OUTPUT INSERTED.ID
-                        VALUES (@Name, @userName, @Email, @Address)";
+                        VALUES (@contactName, @contactMembers, @contactAddress, @contactBirthday)";
 
-                    DbUtils.AddParameter(cmd, "@Name", user.Name);
-                    DbUtils.AddParameter(cmd, "@userName", user.userName);
-                    DbUtils.AddParameter(cmd, "@Email", user.Email);
-                    DbUtils.AddParameter(cmd, "@Address", user.Address);
+                    DbUtils.AddParameter(cmd, "@contactName", contact.ContactName);
+                    DbUtils.AddParameter(cmd, "@contactMembers", contact.ContactMembers);
+                    DbUtils.AddParameter(cmd, "@contactAddress", contact.ContactAddress);
+                    DbUtils.AddParameter(cmd, "@contactBirthday", contact.ContactBirthday);
 
-                    user.Id = (int)cmd.ExecuteScalar();
+                    contact.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }
 
-        public void Update(User user)
+        public void Update(Contact contact)
         {
             using (var conn = Connection)
             {
@@ -108,18 +108,18 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        UPDATE Post
-                           SET Name = @Name,
-                               username = @userName,
-                               Email = @Email,
-                               Address = @Address,
+                        UPDATE Contact
+                           SET contactName = @contactName,
+                               contactMembers = @contactMembers,
+                               contactAddress = @contactAddress,
+                               contactBirthday = @contactBirthday,
                          WHERE Id = @Id";
 
-                    DbUtils.AddParameter(cmd, "@Name", user.Name);
-                    DbUtils.AddParameter(cmd, "@userName", user.userName);
-                    DbUtils.AddParameter(cmd, "@Email", user.Email);
-                    DbUtils.AddParameter(cmd, "@Address", user.Address);
-                    DbUtils.AddParameter(cmd, "@Id", user.Id);
+                    DbUtils.AddParameter(cmd, "@contactName", contact.ContactName);
+                    DbUtils.AddParameter(cmd, "@contactMembers", contact.ContactMembers);
+                    DbUtils.AddParameter(cmd, "@contactAddress", contact.ContactAddress);
+                    DbUtils.AddParameter(cmd, "@contactBirthday", contact.ContactBirthday);
+                    DbUtils.AddParameter(cmd, "@Id", contact.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -133,7 +133,7 @@ namespace DontForget.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Post WHERE Id = @Id";
+                    cmd.CommandText = "DELETE FROM Contact WHERE Id = @Id";
                     DbUtils.AddParameter(cmd, "@id", id);
                     cmd.ExecuteNonQuery();
                 }
