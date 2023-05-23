@@ -50,8 +50,9 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, contactName, contactMembers, contactAddress, contactBirthday
+                          SELECT Id, userId, contactName, contactMembers, contactAddress, contactBirthday
                             FROM contact
+                            WHERE Id = @Id
                             ";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -63,7 +64,8 @@ namespace DontForget.Repositories
                     {
                         contact = new Contact()
                         {
-                            Id = DbUtils.GetInt(reader, "Id"),
+                            Id = id,
+                            UserId = DbUtils.GetInt(reader, "userId"),
                             ContactName = DbUtils.GetString(reader, "contactName"),
                             ContactMembers = DbUtils.GetString(reader, "contactMembers"),
                             ContactAddress = DbUtils.GetString(reader, "contactAddress"),
@@ -86,10 +88,11 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Contact (contactName, contactMembers, contactAddress, contactBirthday)
+                        INSERT INTO Contact (userId, contactName, contactMembers, contactAddress, contactBirthday)
                         OUTPUT INSERTED.ID
-                        VALUES (@contactName, @contactMembers, @contactAddress, @contactBirthday)";
+                        VALUES (@userId, @contactName, @contactMembers, @contactAddress, @contactBirthday)";
 
+                    DbUtils.AddParameter(cmd, "@userId", contact.UserId);
                     DbUtils.AddParameter(cmd, "@contactName", contact.ContactName);
                     DbUtils.AddParameter(cmd, "@contactMembers", contact.ContactMembers);
                     DbUtils.AddParameter(cmd, "@contactAddress", contact.ContactAddress);
@@ -109,12 +112,14 @@ namespace DontForget.Repositories
                 {
                     cmd.CommandText = @"
                         UPDATE Contact
-                           SET contactName = @contactName,
+                           SET userId = @userId,
+                               contactName = @contactName,
                                contactMembers = @contactMembers,
                                contactAddress = @contactAddress,
-                               contactBirthday = @contactBirthday,
+                               contactBirthday = @contactBirthday
                          WHERE Id = @Id";
 
+                    DbUtils.AddParameter(cmd, "@userId", contact.UserId);
                     DbUtils.AddParameter(cmd, "@contactName", contact.ContactName);
                     DbUtils.AddParameter(cmd, "@contactMembers", contact.ContactMembers);
                     DbUtils.AddParameter(cmd, "@contactAddress", contact.ContactAddress);
