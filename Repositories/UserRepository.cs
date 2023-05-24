@@ -19,8 +19,8 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, Name, userName, Email, Address
-                            FROM User
+                          SELECT Id, name, userName, email, address
+                            FROM [user]
                             "
                     ;
 
@@ -32,10 +32,10 @@ namespace DontForget.Repositories
                         users.Add(new User()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            Name = DbUtils.GetString(reader, "Name"),
+                            Name = DbUtils.GetString(reader, "name"),
                             userName = DbUtils.GetString(reader, "userName"),
-                            Email = DbUtils.GetString(reader, "Email"),
-                            Address = DbUtils.GetString(reader, "Address"),
+                            Email = DbUtils.GetString(reader, "email"),
+                            Address = DbUtils.GetString(reader, "address"),
                         });
                     }
 
@@ -54,8 +54,9 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, Name, userName, Email, Address
-                            FROM User
+                          SELECT Id, name, userName, email, address
+                            FROM [User]
+                            WHERE Id = @Id
                             ";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -68,10 +69,10 @@ namespace DontForget.Repositories
                         user = new User()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            Name = DbUtils.GetString(reader, "Name"),
+                            Name = DbUtils.GetString(reader, "name"),
                             userName = DbUtils.GetString(reader, "userName"),
-                            Email = DbUtils.GetString(reader, "Email"),
-                            Address = DbUtils.GetString(reader, "Address"),
+                            Email = DbUtils.GetString(reader, "email"),
+                            Address = DbUtils.GetString(reader, "address"),
                         };
                     }
 
@@ -90,14 +91,14 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO User (Name, userName, Email, Address)
+                        INSERT INTO [user] (name, userName, email, address)
                         OUTPUT INSERTED.ID
-                        VALUES (@Name, @userName, @Email, @Address)";
+                        VALUES (@name, @userName, @email, @address)";
 
-                    DbUtils.AddParameter(cmd, "@Name", user.Name);
+                    DbUtils.AddParameter(cmd, "@name", user.Name);
                     DbUtils.AddParameter(cmd, "@userName", user.userName);
-                    DbUtils.AddParameter(cmd, "@Email", user.Email);
-                    DbUtils.AddParameter(cmd, "@Address", user.Address);
+                    DbUtils.AddParameter(cmd, "@email", user.Email);
+                    DbUtils.AddParameter(cmd, "@address", user.Address);
 
                     user.Id = (int)cmd.ExecuteScalar();
                 }
@@ -112,17 +113,17 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        UPDATE Post
-                           SET Name = @Name,
-                               username = @userName,
-                               Email = @Email,
-                               Address = @Address,
+                        UPDATE [user]
+                           SET name = @name,
+                               userName = @userName,
+                               email = @email,
+                               address = @address
                          WHERE Id = @Id";
 
-                    DbUtils.AddParameter(cmd, "@Name", user.Name);
+                    DbUtils.AddParameter(cmd, "@name", user.Name);
                     DbUtils.AddParameter(cmd, "@userName", user.userName);
-                    DbUtils.AddParameter(cmd, "@Email", user.Email);
-                    DbUtils.AddParameter(cmd, "@Address", user.Address);
+                    DbUtils.AddParameter(cmd, "@email", user.Email);
+                    DbUtils.AddParameter(cmd, "@address", user.Address);
                     DbUtils.AddParameter(cmd, "@Id", user.Id);
 
                     cmd.ExecuteNonQuery();
@@ -137,7 +138,7 @@ namespace DontForget.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Post WHERE Id = @Id";
+                    cmd.CommandText = "DELETE FROM [user] WHERE Id = @Id";
                     DbUtils.AddParameter(cmd, "@id", id);
                     cmd.ExecuteNonQuery();
                 }
