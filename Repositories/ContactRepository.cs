@@ -15,7 +15,7 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, contactName, contactMembers, contactAddress, contactBirthday
+                          SELECT Id, userId, contactName, contactMembers, contactAddress, contactBirthday
                             FROM contact
                             "
                     ;
@@ -28,6 +28,7 @@ namespace DontForget.Repositories
                         contacts.Add(new Contact()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            UserId = DbUtils.GetInt(reader,"userId"),
                             ContactName = DbUtils.GetString(reader, "contactName"),
                             ContactMembers = DbUtils.GetString(reader, "contactMembers"),
                             ContactAddress = DbUtils.GetString(reader, "contactAddress"),
