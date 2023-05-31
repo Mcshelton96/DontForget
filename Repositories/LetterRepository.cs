@@ -102,11 +102,13 @@ namespace DontForget.Repositories
                     cmd.CommandText = @"
                         UPDATE letter
                            SET letterTitle = @letterTitle,
-                               letterBody = @letterBody,
+                               letterBody = @letterBody
                          WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@letterTitle", letter.LetterTitle);
                     DbUtils.AddParameter(cmd, "@letterBody", letter.LetterBody);
+                    DbUtils.AddParameter(cmd, "@Id", letter.Id);
+
 
 
                     cmd.ExecuteNonQuery();
