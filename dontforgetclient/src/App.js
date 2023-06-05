@@ -1,16 +1,23 @@
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
+import ApplicationViews from "./components/ApplicationViews";
 import { LetterProvider } from "./providers/LetterProvider";
-import LetterList from "./components/LetterList";
+
+
 
 function App() {
   return (
     <div className="App">
-      <LetterProvider>
-        <LetterList />
-      </LetterProvider>
+      <Router>
+        <LetterProvider>
+          <ApplicationViews />
+        </LetterProvider>
+      </Router>
     </div>
   );
 }
 
 export default App;
+
+
