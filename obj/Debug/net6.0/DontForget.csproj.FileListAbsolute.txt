@@ -64,3 +64,6 @@ C:\Users\conra\source\repos\DontForget\obj\Debug\net6.0\refint\DontForget.dll
 C:\Users\conra\source\repos\DontForget\obj\Debug\net6.0\DontForget.pdb
 C:\Users\conra\source\repos\DontForget\obj\Debug\net6.0\DontForget.genruntimeconfig.cache
 C:\Users\conra\source\repos\DontForget\obj\Debug\net6.0\ref\DontForget.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\dontforgetclient\package-lock.json
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\dontforgetclient\package.json
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\dontforgetclient\public\manifest.json
