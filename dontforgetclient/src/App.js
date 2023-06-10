@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import ApplicationViews from "./components/ApplicationViews";
 import { LetterProvider } from "./providers/LetterProvider";
-
+import Header from "./components/Header";
 
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
     <div className="App">
       <Router>
         <LetterProvider>
+          <Header/>
           <ApplicationViews />
         </LetterProvider>
       </Router>
