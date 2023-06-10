@@ -10,16 +10,21 @@ const Header = () => {
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
           <Link to="/" className="nav-link">
-          New Letter
+          My Letters
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/posts/add" className="nav-link">
-            My Letters
+          <Link to="/letter/add" className="nav-link">
+            New Letter
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/posts/add" className="nav-link">
+          <Link to="/letter/edit" className="nav-link">
+            Edit Letter
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/letters/add" className="nav-link">
             Settings
           </Link>
         </li>
