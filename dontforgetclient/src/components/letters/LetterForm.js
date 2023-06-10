@@ -16,7 +16,7 @@ const LetterForm = () => {
         const letter = {
             letterTitle,
             letterBody,
-            userProfileId: +userProfileId
+            // userProfileId: +userProfileId
         };
 
         addLetter(letter).then((p) => {
