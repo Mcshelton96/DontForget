@@ -4,11 +4,10 @@ import { LetterContext } from "../../providers/LetterProvider";
 import { useNavigate } from "react-router-dom";
 
 const EditLetter = () => {
-    const { editLetter } = useContext(LetterContext);
+    const { editLetter, deleteLetter } = useContext(LetterContext);
     const [letterTitle, setLetterTitle] = useState("");
     const [letterBody, setLetterBody] = useState("");
 
-    // Use this hook to allow us to programatically redirect users
     const navigate = useNavigate();
 
     const submit = (e) => {
@@ -18,10 +17,17 @@ const EditLetter = () => {
         };
 
         editLetter(letter).then((p) => {
-            //navigate user back to home route
+            //navigate user back to home route currently set to letter list
             navigate.push("/");
         });
     };
+
+    const handleDelete = () => {
+        deleteLetter().then((p) => {
+            navigate.push("/");
+        });
+    };
+
 
     return (
         <div className="container pt-4">
@@ -57,6 +63,9 @@ const EditLetter = () => {
                         </Form>
                         <Button color="info" onClick={submit}>
                             SUBMIT
+                        </Button>
+                        <Button color="danger" onClick={handleDelete}>
+                            DELETE
                         </Button>
                     </CardBody>
                 </Card>

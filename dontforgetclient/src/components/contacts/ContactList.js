@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from "react";
-import { ContactContext, LetterContext } from "../../providers/ContactProvider";
+import { ContactContext } from "../../providers/ContactProvider";
 import Contact from "./Contact"
+import { Link } from "react-router-dom";
 
 
 const ContactList = () => {
-    const { contacts, GetAllContacts } = useContext(ContactContext);
+    const { contacts, getAllContacts } = useContext(ContactContext);
 
     useEffect(() => {
-        GetAllContacts();
+        getAllContacts();
     }, []);
 
     return (
@@ -19,6 +20,9 @@ const ContactList = () => {
             ))}
           </div>
         </div>
+        <div className="row justify-content-center mt-4">
+                <Link to="/contact/edit" className="btn btn-primary">Edit Contact</Link>
+            </div>
       </div>
     );
 };

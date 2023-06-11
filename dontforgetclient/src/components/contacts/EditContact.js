@@ -1,18 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Form, FormGroup, Card, CardBody, Label, Input, Button } from "reactstrap";
 import { ContactContext } from "../../providers/ContactProvider";
 import { useNavigate } from "react-router-dom";
 
-const ContactForm = () => {
-    const { addContact } = useContext(ContactContext);
+const EditContact = () => {
+    const { editContact, deleteContact } = useContext(ContactContext);
     const [contactName, setContactName] = useState("");
-    const [contactAddress, setContactAddress] = useState("");
     const [contactMembers, setContactMembers] = useState("");
+    const [contactAddress, setContactAddress] = useState("");
     const [contactBirthday, setContactBirthday] = useState("");
 
 
-
-    // Use this hook to allow us to programatically redirect users
     const navigate = useNavigate();
 
     const submit = (e) => {
@@ -23,11 +21,18 @@ const ContactForm = () => {
             contactBirthday
         };
 
-        addContact(contact).then((p) => {
-            //navigate user back to home route
+        editContact(contact).then((p) => {
+            //navigate user back to home route currently set to letter list
             navigate.push("/");
         });
     };
+
+    const handleDelete = () => {
+        deleteContact().then((p) => {
+            navigate.push("/");
+        });
+    };
+
 
     return (
         <div className="container pt-4">
@@ -36,11 +41,11 @@ const ContactForm = () => {
                     <CardBody>
                         <Form>
                             <FormGroup>
-                                <Label for="ContactName">Contact Name</Label>
-                                <Input id="ContactName" onChange={(e) => setContactName(e.target.value)} />
+                                <Label for="contactName">Contact Name</Label>
+                                <Input id="contactName" onChange={(e) => setContactName(e.target.value)} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="ContactMembers">Family Members</Label>
+                                <Label for="contactMembers">Family Members</Label>
                                 <Input id="contactMembers" onChange={(e) => setContactMembers(e.target.value)} />
                             </FormGroup>
                             <FormGroup>
@@ -48,12 +53,15 @@ const ContactForm = () => {
                                 <Input id="contactAddress" onChange={(e) => setContactAddress(e.target.value)} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="contactBirthday">Contact Birthday</Label>
+                                <Label for="contactBirthday">Letter Body</Label>
                                 <Input id="contactBirthday" onChange={(e) => setContactBirthday(e.target.value)} />
                             </FormGroup>
                         </Form>
                         <Button color="info" onClick={submit}>
                             SUBMIT
+                        </Button>
+                        <Button color="danger" onClick={handleDelete}>
+                            DELETE
                         </Button>
                     </CardBody>
                 </Card>
@@ -62,4 +70,4 @@ const ContactForm = () => {
     );
 };
 
-export default ContactForm;
+export default EditContact;
