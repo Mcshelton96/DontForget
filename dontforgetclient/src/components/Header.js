@@ -28,6 +28,11 @@ const Header = () => {
             Settings
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to="/contacts/list" className="nav-link">
+            Contacts
+          </Link>
+        </li>
       </ul>
     </nav>
   );
