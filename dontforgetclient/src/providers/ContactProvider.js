@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const ContactContext = React.createContext();
 
 export const ContactProvider = (props) => {
     const [contacts, setContacts] = useState([]);
 
-    const GetAllContacts = () => {
+    const getAllContacts = () => {
         return fetch("/api/contact")
             .then((res) => res.json())
             .then(setContacts);
     };
+
+    useEffect(() => {
+        getAllContacts();
+      }, []);
 
     const addContact = (contact) => {
         return fetch("/api/contact", {
@@ -21,7 +25,7 @@ export const ContactProvider = (props) => {
         });
     };
 
-    const editContact = (contact) => {
+    const editContact = (id, contact) => {
         return fetch(`/api/contact/${id}`, {
             method: "PUT",
             headers: {
@@ -31,7 +35,7 @@ export const ContactProvider = (props) => {
         });
     };
 
-    const deleteContact = (contact) => {
+    const deleteContact = (id, contact) => {
         return fetch(`/api/contact/${id}`, {
             method: "DELETE",
             headers: {
@@ -47,7 +51,7 @@ export const ContactProvider = (props) => {
     };
 
     return (
-        <ContactContext.Provider value={{ contacts, GetAllContacts, addContact, editContact, deleteContact, getContactById }}>
+        <ContactContext.Provider value={{ contacts, getAllContacts, addContact, editContact, deleteContact, getContactById }}>
             {props.children}
         </ContactContext.Provider>
     );

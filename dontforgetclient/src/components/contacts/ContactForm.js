@@ -8,6 +8,8 @@ const ContactForm = () => {
     const [contactName, setContactName] = useState("");
     const [contactAddress, setContactAddress] = useState("");
     const [contactMembers, setContactMembers] = useState("");
+    const [contactBirthday, setContactBirthday] = useState("");
+
 
 
     // Use this hook to allow us to programatically redirect users
@@ -19,7 +21,6 @@ const ContactForm = () => {
             contactMembers,
             contactAddress,
             contactBirthday
-            // userProfileId: +userProfileId
         };
 
         addContact(contact).then((p) => {
@@ -34,20 +35,6 @@ const ContactForm = () => {
                 <Card className="col-sm-12 col-lg-6">
                     <CardBody>
                         <Form>
-                            {/* <FormGroup>
-                  <Label for="userId">User Id (For Now...)</Label>
-                  <Input
-                    id="userId"
-                    onChange={(e) => setUserProfileId(e.target.value)}
-                  />
-                </FormGroup> */}
-                            {/* <FormGroup>
-                  <Label for="imageUrl">Gif URL</Label>
-                  <Input
-                    id="imageUrl"
-                    onChange={(e) => setImageUrl(e.target.value)}
-                  />
-                </FormGroup> */}
                             <FormGroup>
                                 <Label for="ContactName">Contact Name</Label>
                                 <Input id="ContactName" onChange={(e) => setContactName(e.target.value)} />

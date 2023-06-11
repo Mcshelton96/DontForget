@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { LetterContext } from "../../providers/LetterProvider";
 import Letter from "./Letter"
+import { Link } from "react-router-dom";
 
 
 const LetterList = () => {
@@ -19,6 +20,9 @@ const LetterList = () => {
             ))}
           </div>
         </div>
+        <div className="row justify-content-center mt-4">
+                <Link to="/letter/edit" className="btn btn-primary">Edit Letter</Link>
+            </div>
       </div>
     );
 };
