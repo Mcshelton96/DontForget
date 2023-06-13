@@ -18,16 +18,12 @@ const Header = () => {
             New Letter
           </Link>
         </li>
-        <li className="nav-item">
-          <Link to="/letter/edit" className="nav-link">
-            Edit Letter
-          </Link>
-        </li>
-        <li className="nav-item">
+        {/* Stretch Goal */}
+        {/* <li className="nav-item">
           <Link to="/letter/add" className="nav-link">
             Settings
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link to="/contact/list" className="nav-link">
             Contacts

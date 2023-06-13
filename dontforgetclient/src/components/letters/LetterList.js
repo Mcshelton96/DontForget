@@ -20,9 +20,6 @@ const LetterList = () => {
             ))}
           </div>
         </div>
-        <div className="row justify-content-center mt-4">
-                <Link to="/letter/edit" className="btn btn-primary">Edit Letter</Link>
-            </div>
       </div>
     );
 };

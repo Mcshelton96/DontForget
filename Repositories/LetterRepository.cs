@@ -46,7 +46,7 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, UserId, LetterTitle, LetterBody,
+                          SELECT Id, UserId, LetterTitle, LetterBody
                             FROM Letter
                            WHERE Id = @Id";
 

@@ -21,8 +21,8 @@ export const LetterProvider = (props) => {
         });
     };
 
-    const editLetter = (id, letter) => {
-        return fetch(`/api/letter/${id}`, {
+    const editLetter = (Id, letter) => {
+        return fetch(`/api/letter/${Id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -31,8 +31,8 @@ export const LetterProvider = (props) => {
         });
     };
 
-    const deleteLetter = (id, letter) => {
-        return fetch(`/api/letter/${id}`, {
+    const deleteLetter = (Id, letter) => {
+        return fetch(`/api/letter/${Id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

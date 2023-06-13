@@ -1,13 +1,14 @@
 import React from "react";
-import { Card, CardImg, CardBody } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Contact = ({ contact }) => {
   return (
     <Card className="m-4">
-      {/* <p className="text-left px-2">Posted by: {post.userProfile.name}</p> */}
-      {/* <CardImg top src={post.imageUrl} alt={post.title} /> */}
       <CardBody>
+      <header>
+          <Link to={`/contact/${contact.id}/edit`}>Edit: </Link>
+        </header>
         <p>
           <strong>{contact.contactName}</strong>
         </p>

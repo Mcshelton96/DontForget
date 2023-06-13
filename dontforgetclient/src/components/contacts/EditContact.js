@@ -52,10 +52,6 @@ const EditContact = () => {
                                 <Label for="contactAddress">Mailing Address</Label>
                                 <Input id="contactAddress" onChange={(e) => setContactAddress(e.target.value)} />
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="contactBirthday">Letter Body</Label>
-                                <Input id="contactBirthday" onChange={(e) => setContactBirthday(e.target.value)} />
-                            </FormGroup>
                         </Form>
                         <Button color="info" onClick={submit}>
                             SUBMIT
