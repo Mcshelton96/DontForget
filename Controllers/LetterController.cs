@@ -44,6 +44,10 @@ namespace DontForget.Controllers
         [HttpPost]
         public IActionResult Letter(Letter letter)
         {
+            var firebasekey = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value ?? "";
+            var user = _userRepository.GetByFireBaseKey(firebasekey);
+            if (user == null) { return NotFound("User Does Not Exist"); }
+            letter.UserId=user.Id;
             _letterRepository.Add(letter);
             return CreatedAtAction("Get", new { id = letter.Id }, letter);
         }

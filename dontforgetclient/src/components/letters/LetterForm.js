@@ -17,7 +17,7 @@ const LetterForm = () => {
       const letter = {
         letterTitle,
         letterBody,
-        userId: +userId,
+        userId: 0,
       };
   
       addLetter(letter).then((p) => {
@@ -32,13 +32,13 @@ const LetterForm = () => {
           <Card className="col-sm-12 col-lg-6">
             <CardBody>
               <Form>
-                <FormGroup>
+                {/* <FormGroup>
                   <Label for="userId">User Id (For Now...)</Label>
                   <Input
                     id="userId"
                     onChange={(e) => setUserId(e.target.value)}
                   />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup>
                   <Label for="LetterTitle">Letter Title</Label>
                   <Input

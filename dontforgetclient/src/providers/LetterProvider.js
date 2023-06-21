@@ -19,10 +19,14 @@ export const LetterProvider = (props) => {
     };
 
     const addLetter = (letter) => {
+        const userRecord = JSON.parse(localStorage.getItem("capstone_user"));
+
         return fetch("/api/letter", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${userRecord.accessToken}`
+
             },
             body: JSON.stringify(letter),
         });
