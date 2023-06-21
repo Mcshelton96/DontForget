@@ -67,3 +67,13 @@ C:\Users\conra\source\repos\DontForget\obj\Debug\net6.0\ref\DontForget.dll
 C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\dontforgetclient\package-lock.json
 C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\dontforgetclient\package.json
 C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\dontforgetclient\public\manifest.json
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\System.Web.Cors.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\FirebaseAdmin.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Google.Api.Gax.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Google.Api.Gax.Rest.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Google.Apis.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Google.Apis.Auth.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Google.Apis.Core.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\conra\source\repos\DontForget\bin\Debug\net6.0\Newtonsoft.Json.dll

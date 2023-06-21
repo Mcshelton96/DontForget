@@ -1,33 +1,68 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Form, FormGroup, Card, CardBody, Label, Input, Button } from "reactstrap";
 import { LetterContext } from "../../providers/LetterProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditLetter = () => {
     const { editLetter, deleteLetter } = useContext(LetterContext);
     const [letterTitle, setLetterTitle] = useState("");
     const [letterBody, setLetterBody] = useState("");
+    const { Id } = useParams();
 
     const navigate = useNavigate();
 
-    const submit = (e) => {
+    useEffect(() => {
+        // Fetch the letter data based on the Id parameter
+        fetch(`https://localhost:7218/api/letter/${Id}`)
+            .then(response => response.json())
+            .then(data => {
+                setLetterTitle(data.letterTitle);
+                setLetterBody(data.letterBody);
+            })
+            .catch(error => {
+                console.error("Error fetching letter data:", error);
+            });
+    }, [Id]);
+
+    const handleSaveButtonClick = (event) => {
+        event.preventDefault();
+
         const letter = {
-            letterTitle,
-            letterBody,
+            Id: Id,
+            letterTitle: letterTitle,
+            letterBody: letterBody
         };
 
-        editLetter(letter).then((p) => {
-            //navigate user back to home route currently set to letter list
-            navigate.push("/");
-        });
+        editLetter(Id, letter)
+            .then(() => {
+                navigate("/letter/list");
+            })
+            .catch(error => {
+                console.error("Error updating letter:", error);
+            });
     };
+
+    // const submit = (e) => {
+    //     const letter = {
+    //         letterTitle,
+    //         letterBody,
+    //     };
+
+    //     editLetter(letter).then((p) => {
+    //         //navigate user back to home route currently set to letter list
+    //         navigate.push("/");
+    //     });
+    // };
 
     const handleDelete = () => {
-        deleteLetter().then((p) => {
-            navigate.push("/");
-        });
+        deleteLetter(Id)
+            .then(() => {
+                navigate("/letter/list");
+            })
+            .catch(error => {
+                console.error("Error deleting letter:", error);
+            });
     };
-
 
     return (
         <div className="container pt-4">
@@ -35,33 +70,24 @@ const EditLetter = () => {
                 <Card className="col-sm-12 col-lg-6">
                     <CardBody>
                         <Form>
-                            {/* <FormGroup>
-                  <Label for="userId">User Id (For Now...)</Label>
-                  <Input
-                    id="userId"
-                    onChange={(e) => setUserProfileId(e.target.value)}
-                  />
-                </FormGroup> */}
-                            {/* <FormGroup>
-                  <Label for="imageUrl">Gif URL</Label>
-                  <Input
-                    id="imageUrl"
-                    onChange={(e) => setImageUrl(e.target.value)}
-                  />
-                </FormGroup> */}
                             <FormGroup>
                                 <Label for="letterTitle">Title</Label>
-                                <Input id="letterTitle" onChange={(e) => setLetterTitle(e.target.value)} />
+                                <Input
+                                    id="letterTitle"
+                                    value={letterTitle}
+                                    onChange={(e) => setLetterTitle(e.target.value)}
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="letterBody">Letter Body</Label>
                                 <Input
                                     id="letterBody"
+                                    value={letterBody}
                                     onChange={(e) => setLetterBody(e.target.value)}
                                 />
                             </FormGroup>
                         </Form>
-                        <Button color="info" onClick={submit}>
+                        <Button color="info" onClick={handleSaveButtonClick}>
                             SUBMIT
                         </Button>
                         <Button color="danger" onClick={handleDelete}>

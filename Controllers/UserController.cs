@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DontForget.Repositories;
 using DontForget.Models;
-using Microsoft.Extensions.Hosting;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Authorization;
 
 namespace DontForget.Controllers
+
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,19 +24,35 @@ namespace DontForget.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
-            var user = _userRepository.GetById(id);
+            var loggInUser = User;
+
+            return Ok(_userRepository.GetById(id));
+            //var user = _userRepository.GetById(id);
+            //if (user == null)
+            //{
+            //    return NotFound();
+            //}
+            //return Ok(user);
+        }
+
+        [HttpGet("user")]
+        public IActionResult GetByFireBaseKey()
+        {
+            var firebasekey = User.Claims.FirstOrDefault(x => x.Type=="user_id")?.Value ?? "";
+            var user = _userRepository.GetByFireBaseKey(firebasekey);
             if (user == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(user); 
         }
+
 
         // POST api/<UserController>
         [HttpPost]
-        public IActionResult User(User user)
+        public IActionResult AddUser(User user)
         {
             _userRepository.Add(user);
             return CreatedAtAction("Get", new { id = user.Id }, user);

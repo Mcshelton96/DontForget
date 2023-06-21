@@ -9,23 +9,13 @@ const Header = () => {
       </Link>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
-          <Link to="/" className="nav-link">
+          <Link to="/letter/list" className="nav-link">
           My Letters
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/letter/add" className="nav-link">
             New Letter
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/letter/edit" className="nav-link">
-            Edit Letter
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/letter/add" className="nav-link">
-            Settings
           </Link>
         </li>
         <li className="nav-item">

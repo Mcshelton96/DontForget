@@ -6,7 +6,14 @@ export const LetterProvider = (props) => {
     const [letters, setLetters] = useState([]);
 
     const GetAllLetters = () => {
-        return fetch("/api/letter")
+        const userRecord = JSON.parse(localStorage.getItem("capstone_user"));
+
+        return fetch("/api/letter", {
+            method: "GET",
+            headers : {
+                Authorization: `Bearer ${userRecord.accessToken}`
+            }
+        })
             .then((res) => res.json())
             .then(setLetters);
     };
@@ -21,8 +28,8 @@ export const LetterProvider = (props) => {
         });
     };
 
-    const editLetter = (id, letter) => {
-        return fetch(`/api/letter/${id}`, {
+    const editLetter = (Id, letter) => {
+        return fetch(`/api/letter/${Id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -31,8 +38,8 @@ export const LetterProvider = (props) => {
         });
     };
 
-    const deleteLetter = (id, letter) => {
-        return fetch(`/api/letter/${id}`, {
+    const deleteLetter = (Id, letter) => {
+        return fetch(`/api/letter/${Id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

@@ -8,7 +8,7 @@ namespace DontForget.Repositories
     {
         public LetterRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<Letter> GetAllLetters()
+        public List<Letter> GetAllLettersByUser(int id)
         {
             using (var conn = Connection)
             {
@@ -17,8 +17,10 @@ namespace DontForget.Repositories
                 {
                     cmd.CommandText = @"
                        SELECT Id, userId, letterTitle, letterBody
-                       FROM letter";
-
+                       FROM letter
+                       WHERE userId = @Id
+                        ";
+                    cmd.Parameters.AddWithValue("@Id", id);
                     var reader = cmd.ExecuteReader();
 
                     var letters = new List<Letter>();
@@ -46,7 +48,7 @@ namespace DontForget.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, UserId, LetterTitle, LetterBody,
+                          SELECT Id, UserId, LetterTitle, LetterBody
                             FROM Letter
                            WHERE Id = @Id";
 

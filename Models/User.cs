@@ -17,5 +17,7 @@ namespace DontForget.Models
         [Required]
         public string? Address { get; set; }
 
+        public string? FireBaseKey { get; set; }
+
     }
 }

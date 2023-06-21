@@ -9,5 +9,7 @@ namespace DontForget.Repositories
         List<User> GetAllUsers();
         User GetById(int id);
         void Update(User user);
+
+        User? GetByFireBaseKey(string firebasekey);
     }
 }

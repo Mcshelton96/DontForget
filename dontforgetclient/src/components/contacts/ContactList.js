@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { ContactContext } from "../../providers/ContactProvider";
 import Contact from "./Contact"
-import { Link } from "react-router-dom";
 
 
 const ContactList = () => {
@@ -20,9 +19,6 @@ const ContactList = () => {
             ))}
           </div>
         </div>
-        <div className="row justify-content-center mt-4">
-                <Link to="/contact/edit" className="btn btn-primary">Edit Contact</Link>
-            </div>
       </div>
     );
 };
