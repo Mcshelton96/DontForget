@@ -6,7 +6,14 @@ export const LetterProvider = (props) => {
     const [letters, setLetters] = useState([]);
 
     const GetAllLetters = () => {
-        return fetch("/api/letter")
+        const userRecord = JSON.parse(localStorage.getItem("capstone_user"));
+
+        return fetch("/api/letter", {
+            method: "GET",
+            headers : {
+                Authorization: `Bearer ${userRecord.accessToken}`
+            }
+        })
             .then((res) => res.json())
             .then(setLetters);
     };

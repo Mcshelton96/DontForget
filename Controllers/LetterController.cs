@@ -1,5 +1,6 @@
 ﻿using DontForget.Models;
 using DontForget.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,15 +12,20 @@ namespace DontForget.Controllers
     public class LetterController : ControllerBase
     {
         private readonly ILetterRepository _letterRepository;
-        public LetterController(ILetterRepository letterRepository)
+        private readonly IUserRepository _userRepository;
+        public LetterController(ILetterRepository letterRepository, IUserRepository userRepository)
         {
             _letterRepository = letterRepository;
+            _userRepository = userRepository;
         }
         // GET: api/<LetterController>
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_letterRepository.GetAllLetters());
+            var firebasekey = User.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value ?? "";
+            var user = _userRepository.GetByFireBaseKey(firebasekey);
+            if (user == null) { return NotFound("User Does Not Exist"); }
+            return Ok(_letterRepository.GetAllLettersByUser(user.Id));
         }
 
         // GET api/<LetterController>/5

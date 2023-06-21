@@ -6,7 +6,7 @@ namespace DontForget.Repositories
     {
         void Add(Letter letter);
         void Delete(int id);
-        List<Letter> GetAllLetters();
+        List<Letter> GetAllLettersByUser(int id);
         Letter GetById(int id);
         void Update(Letter letter);
     }

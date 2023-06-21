@@ -22,7 +22,7 @@ const LetterForm = () => {
   
       addLetter(letter).then((p) => {
         // Navigate the user back to the home route
-        navigate("/");
+        navigate("/letter/list");
       });
     };
   

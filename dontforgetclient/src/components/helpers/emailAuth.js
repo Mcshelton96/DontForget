@@ -5,20 +5,22 @@ import {
     signOut,
     updateProfile,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 
-const _apiUrl = "https://localhost:7082/api"
-
+const _apiUrl = "https://localhost:7218/api"
 //check our PAO to ensure the firebase user that was just logged exists in our local SQL database
-const doesUserExist = (fireBaseUserId) => {
+const doesUserExist = (navigate) => {
 
     return getToken()
-    .then((token) => fetch(`${_apiUrl}/UserExists/${fireBaseUserId}`, {
+    .then((token) => fetch(`${_apiUrl}/user/user`, {
         method: "GET",
         headers : {
             Authorization: `Bearer ${token}`
         }
-    }).then(resp => resp.ok))
+    }).then(response => {
+         return (response.ok)
+    } ))
 
 }
 
@@ -31,32 +33,30 @@ export const getToken = () => {
     }
     return currentUser.getIdToken();
 };
+//was out of scope
+const userAuth = {};
 
 export const emailAuth = {
     // Register New User
     register: function (userObj, navigate) {
         const auth = getAuth();
-        const userAuth = {};
         createUserWithEmailAndPassword(auth, userObj.email, userObj.password)
             .then((userCredential) => {
                 userAuth.email = userCredential.user.email;
+                userAuth.firebasekey = userCredential.user.firebasekey;
+
                 userAuth.uid = userCredential.user.uid;
                 userAuth.type = "email";
                 doesUserExist(userCredential.user.uid)
                     .then((userExists) => {
                         if (!userExists) {
-                            navigate("/createuser")
+                            navigate("/register")
                         } else {
                             localStorage.setItem("capstone_user", JSON.stringify(userAuth));
-                            navigate("/")
+                            navigate("/letter/list")
                         }
                     })
-            },
-                function (error) {
-                    console.log("Email Register Name Error");
-                    console.log("Error Code", error.code);
-                    console.log("error message", error.message);
-                }
+            }
             )
             .catch((error) => {
                 console.log("Email Register Error");
@@ -73,27 +73,25 @@ export const emailAuth = {
             signInWithEmailAndPassword(auth, userObj.email, userObj.password)
                 .then((signInResponse) => {
                     existingUser.email = signInResponse.user.email;
-                    existingUser.displayName = signInResponse.user.displayName;
-                    existingUser.uid = signInResponse.user.uid;
                     existingUser.accessToken = signInResponse.user.accessToken;
                     existingUser.type = "email";
                     doesUserExist(signInResponse.user.uid)
                         .then((userExists) => {
                             if (!userExists) {
-                                this.signOut();
+                                navigate("/register")
                             } else {
                                 // Saves the user to localstorage
                                 localStorage.setItem("capstone_user", JSON.stringify(existingUser));
                                 // Navigate us back to home
-                                console.log(existingUser.displayName + "Signed In")
-                                navigate("/");
+                                console.log(existingUser + "Signed In")
+                                navigate("/letter/list");
                             }
                         })
 
                     // Saves the user to localstorage
-                    localStorage.setItem("capstone_user", JSON.stringify(userAuth));
+                    // localStorage.setItem("user", JSON.stringify(userAuth));
                     // Navigate us back to home
-                    navigate("/");
+                    // navigate("/");
                 })
                 .catch((error) => {
                     console.log("Email SignIn Error");

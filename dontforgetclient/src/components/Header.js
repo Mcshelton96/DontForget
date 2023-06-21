@@ -9,7 +9,7 @@ const Header = () => {
       </Link>
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
-          <Link to="/" className="nav-link">
+          <Link to="/letter/list" className="nav-link">
           My Letters
           </Link>
         </li>
@@ -18,12 +18,6 @@ const Header = () => {
             New Letter
           </Link>
         </li>
-        {/* Stretch Goal */}
-        {/* <li className="nav-item">
-          <Link to="/letter/add" className="nav-link">
-            Settings
-          </Link>
-        </li> */}
         <li className="nav-item">
           <Link to="/contact/list" className="nav-link">
             Contacts

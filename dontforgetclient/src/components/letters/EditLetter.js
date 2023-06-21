@@ -35,7 +35,7 @@ const EditLetter = () => {
 
         editLetter(Id, letter)
             .then(() => {
-                navigate("/");
+                navigate("/letter/list");
             })
             .catch(error => {
                 console.error("Error updating letter:", error);
@@ -57,7 +57,7 @@ const EditLetter = () => {
     const handleDelete = () => {
         deleteLetter(Id)
             .then(() => {
-                navigate("/");
+                navigate("/letter/list");
             })
             .catch(error => {
                 console.error("Error deleting letter:", error);
